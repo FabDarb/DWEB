@@ -8,19 +8,26 @@
 <?php
 
 echo "<table border=\"2\">";
-echo "<tr>";
-       echo "<td>Nom</td>";
-       echo "<td>Prénom</td>";
-echo "</tr>";
-echo "<tr>";
-       echo "<td>Lerdorf</td>";
-       echo "<td>Rasmus</td>";
-echo "</tr>";
-echo "<tr>";
-       echo "<td>Computer</td>";
-       echo "<td>Jules</td>";
-echo "</tr>";
-echo "</table>";
+echo "\n\t"."<tr>";
+echo "\n\t\t"."<td>Nom</td>";
+echo "\n\t\t"."<td>Prénom</td>";
+echo "\n\t"."</tr>";
+echo "\n\t"."<tr>";
+echo "\n\t\t"."<td>Lerdorf</td>";
+echo "\n\t\t"."<td>Rasmus</td>";
+echo "\n\t"."</tr>";
+echo "\n\t"."<tr>";
+echo "\n\t\t"."<td>Computer</td>";
+echo "\n\t\t"."<td>Jules</td>";
+echo "\n\t"."</tr>";
+echo "\n"."</table>"."\n";
+echo 100+100*7;
+echo "<br>";
+echo "\n"."100+100*7=".(100+100*7);
+$x = 12;
+$y = 111;
+echo "\n\t"."<br>"."\n";
+echo "$x*$y=".($x*$y)."\n";
 ?>
 </body>
 </html>
