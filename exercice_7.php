@@ -1,24 +1,46 @@
 <html>
 <head>
     <title>Exemple1</title>
+    <style>
+        td, table, th {
+            border: 1px solid black;
+
+        }
+        td, th{
+            text-align: center;
+            width: 30px;
+        }
+        th{
+            background-color: lightgray;
+        }
+    </style>
 </head>
 <body>
 <?php
-echo "<table>";
+echo "\n"."<table>";
 for($i=1;$i<=12;$i++){
-    echo "<tr>";
+    echo "\n\t"."<tr>";
 
     for($j=0;$j<=12;$j++){
-        if($j == 0) {
-            echo "<th>"." "."</th>";
+        if($i == 1) {
+            if($j == 0){
+                echo "\n\t\t"."<th>"." "."</th>";
+            }else{
+                echo "\n\t\t"."<th>"."$j"."</th>";
+            }
         }else{
-            echo "<th>".$j."</th>";
+            if($j == 0){
+                echo "\n\t\t"."<th>"."$i"."</th>";
+            }
+            else{
+                echo "\n\t\t"."<td>".($j*$i)."</td>";
+            }
         }
 
     }
-    echo "</tr>";
+    echo "\n\t"."</tr>";
 }
-echo "</table>";
+echo "\n"."</table>";
 ?>
 </body>
 </html>
