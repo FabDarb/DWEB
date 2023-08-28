@@ -26,6 +26,8 @@ echo "<th>"."Clefs"."</th>";
 echo "<th>"."Valeurs"."</th>";
 echo "</tr>";
 $test = 0;
+$_POST['date_depart'] = date('Y-m-d', strtotime($_POST['date_depart']));
+$_POST['date_arrivee'] = date('Y-m-d', strtotime($_POST['date_arrivee']));
 foreach ($_POST as $key => $val){
     echo "<tr>";
     if($test == 0){
