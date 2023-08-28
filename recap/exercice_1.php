@@ -2,6 +2,9 @@
 <head>
     <title>Bulletin</title>
     <style>
+        td{
+            font-weight: bold;
+        }
         h2{
             margin-left:100px;
         }
@@ -17,6 +20,16 @@
         }
         .viser{
             text-align: right;
+        }
+        .moy2Dif td{
+            width: 320px;
+        }
+        div{
+            display: flex;
+            height: 50px;
+        }
+        .noteFinal{
+            margin-left: 570px;
         }
     </style>
 </head>
@@ -84,9 +97,10 @@ $moyenne_cie = arondir($moyenne_cie);
 // la moyenne arondi à la première décimal le calcule c'est 4 X la moyenne info + 1 X moyenne CIE et tout ça diviser par 5
 $moyenne = round(((4*$moyenne_comp_info)+$moyenne_cie)/5, 1);
 
+// et la note globale
 $globalNote = round(($TPI + $moyenne) / 2, 1);
 ?>
-
+<!-- tout le html de la page avec les ajouts  -->
 <h1>Bulletin ICH</h1>
 <h2>Modules de compétences en informatique</h2>
 
@@ -123,12 +137,15 @@ $globalNote = round(($TPI + $moyenne) / 2, 1);
 <h2>TPI</h2>
 
 <table>
-    <tr>
+    <tr class="moy2Dif">
         <td>Moyenne</td>
-        <td><?php echo $TPI ?></td>
+        <td class="viser"><?php echo $TPI ?></td>
     </tr>
 </table>
 
-<h2>Note globale <?php echo $globalNote ?></h2>
+<div>
+    <h2>Note globale</h2>
+    <h2 class="noteFinal"><?php echo $globalNote ?></h2>
+</div>
 </body>
 </html>
