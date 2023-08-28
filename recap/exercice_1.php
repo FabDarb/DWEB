@@ -61,19 +61,38 @@ function dessinTab($tab){
     foreach ($tab as $key => $laNote){
         echo "<tr>";
             echo "<td>".$key."</td>";
-            echo "<td>".number_format($laNote, 1)."</td>";
+            if($laNote >= 4){
+                echo "<td style='color: yellowgreen'>".number_format($laNote, 1)."</td>";
+            }else{
+                echo "<td style='color: red'>".number_format($laNote, 1)."</td>";
+            }
+
         echo "</tr>";
     }
 }
 //note TPI
 $TPI = 5.2;
 
-// création tableau associatif pour les notes informatiques
-$comp_info = array("117 - Informatique d'une petite entreprise" => 5.5, "231 - Appliquer la protection et la sécurité des données" => 5, "319 - Concevoir et implémenter des applications" => 5.5, "164 - Créer des bases de données et y insérer des données" => 4.5);
+$comp_info = array();
+$CIE = array();
+$module = file('tout_les_modules.txt');
 
-
-// aussi un tableau associatif pour les CIEs
-$CIE = array("123 - Activer les services d´un serveur" => 5, "187 - Mettre en service un poste de travail ICT avec le système d’exploitation" => 4.5, "216 - Intégrer les terminaux IoE dans une plateforme existante" => 5, "293 - Créer et publier un site Web" => 4);
+$ok = 0;
+foreach($module as $unit){
+    $u = explode('  ', $unit);
+    if("CIE\r\n" == end($u )|| $ok == 1){
+        if($ok == 0){
+            $ok = 1;
+        }
+        else{
+            $CIE[$u[0]]['desc'] = $u[1];
+            $CIE[$u[0]]['note'] = floatval($u[2]);
+        }
+    }else{
+        $comp_info[$u[0]]['desc'] = $u[1];
+        $comp_info[$u[0]]['note'] = floatval($u[2]);
+    }
+}
 
 // 2 variables pour les moyennes CIEs et notes infos
 $moyenne_comp_info = 0;
@@ -81,12 +100,12 @@ $moyenne_cie = 0;
 
 // 2 foreach pour addititonner les notes et après les divisers par le nombre de note total
 foreach ($comp_info as $note){
-    $moyenne_comp_info += $note;
+    $moyenne_comp_info += $note['note'];
 }
 $moyenne_comp_info /= count($comp_info);
 
 foreach ($CIE as $note){
-    $moyenne_cie += $note;
+    $moyenne_cie += $note['note'];
 }
 $moyenne_cie /= count($CIE);
 
@@ -100,7 +119,8 @@ $moyenne = round(((4*$moyenne_comp_info)+$moyenne_cie)/5, 1);
 // et la note globale
 $globalNote = round(($TPI + $moyenne) / 2, 1);
 ?>
-<!-- tout le html de la page avec les ajouts  -->
+<!-- tout le html de la page avec le les variables php et la fonction d'avant et j'ai aussi mis des number format pour mettre des .0
+  la fonction dessinTab permets de charger un tableau avec les tabs associatif qu'on a fait avant-->
 <h1>Bulletin ICH</h1>
 <h2>Modules de compétences en informatique</h2>
 
@@ -129,7 +149,7 @@ $globalNote = round(($TPI + $moyenne) / 2, 1);
 <table>
     <tr class="moy1Dif">
         <td>Moyenne</td>
-        <td class="viser"><?php echo $moyenne ?></td>
+        <td class="viser"><?php echo number_format($moyenne, 1) ?></td>
     </tr>
 
 </table>
@@ -139,13 +159,13 @@ $globalNote = round(($TPI + $moyenne) / 2, 1);
 <table>
     <tr class="moy2Dif">
         <td>Moyenne</td>
-        <td class="viser"><?php echo $TPI ?></td>
+        <td class="viser"><?php echo number_format($TPI, 1) ?></td>
     </tr>
 </table>
 
 <div>
     <h2>Note globale</h2>
-    <h2 class="noteFinal"><?php echo $globalNote ?></h2>
+    <h2 class="noteFinal"><?php echo number_format($globalNote, 1) ?></h2>
 </div>
 </body>
 </html>
