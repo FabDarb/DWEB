@@ -46,6 +46,8 @@ echo "</table>";
 echo "<pre>";
 print_r($_POST);
 echo "</pre>";
+
+require_once("../recap/exercice_1.inc.php");
 ?>
 </body>
 </html>
