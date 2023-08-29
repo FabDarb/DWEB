@@ -19,6 +19,9 @@
         .trmoy td{
             padding-top: 20px;
         }
+        .affichage td{
+            border-bottom: 2px solid black;
+        }
     </style>
 </head>
 <body>
@@ -68,7 +71,7 @@ function dessinTab($tab){
             break;
         }
         echo "<tr>";
-            echo "<td>".$ordre."  ".$tab[$ordre]['desc']."</td>";
+            echo "<td>".$ordre." - ".$tab[$ordre]['desc']."</td>";
             if($tab[$ordre]['note'] >= 4){
                 echo "<td style='color: yellowgreen' class='nnpadding'>".number_format($tab[$ordre]['note'], 1)."</td>";
             }else{
@@ -105,8 +108,16 @@ $bulletin = array();
 $module = file('tout_les_modules.txt');
 
 $ok = 0;
+
+$sommeNoteCIE = 0;
+$nbNoteCIE = 0;
+
+
 foreach($module as $unit){
     $u = explode('  ', $unit);
+
+
+
     if($u[0] == "TPI") {
         $TPI = $u[1];
         break;
@@ -116,11 +127,20 @@ foreach($module as $unit){
             $ok = 1;
         }
         else {
+            $nbNoteCIE++;
+
+
+
             $bulletin['CIE'][$u[0]]['desc'] = $u[1];
             $bulletin['CIE'][$u[0]]['date'] = strtotime($u[2]);
             $bulletin['CIE'][$u[0]]['note'] = floatval(end($u));
+            $sommeNoteCIE += $bulletin['CIE'][$u[0]]['note'];
         }
     }else{
+
+
+
+
         $bulletin['info'][$u[0]]['desc'] = $u[1];
         $bulletin['info'][$u[0]]['date'] = strtotime($u[2]);
         $bulletin['info'][$u[0]]['note'] = floatval(end($u));
@@ -143,7 +163,7 @@ foreach ($bulletin as $key => $branche){
     }
 }
 $moyenne_comp_info /= count($bulletin['info']);
-$moyenne_cie /= count($bulletin['CIE']);
+$moyenne_cie = $sommeNoteCIE / $nbNoteCIE;
 
 //utilisation fonction pour arrondir
 $moyenne_comp_info = arondir($moyenne_comp_info);
@@ -183,7 +203,7 @@ $globalNote = round(($TPI + $moyenne) / 2, 1);
         <?php testcolor($moyenne_cie, 1); ?>
     </tr>
 
-    <tr class="trmoy">
+    <tr class="trmoy affichage">
         <td>Moyenne</td>
         <?php testcolor($moyenne, 0); ?>
     </tr>
