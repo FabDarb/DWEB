@@ -2,34 +2,22 @@
 <head>
     <title>Bulletin</title>
     <style>
+        h2{
+            margin-left: -50px;
+        }
         td{
+            width:600px;
+            padding-left: 150px;
             font-weight: bold;
         }
-        h2{
-            margin-left:100px;
+        .nnpadding{
+            padding-left: 20px;
         }
-        table{
-            margin-left: 170px;
+        .moy{
+            padding-left: 100px;
         }
-        td{
-            width: 550px;
-        }
-        .moy1Dif td{
-            width: 320px;
-            height: 50px;
-        }
-        .viser{
-            text-align: right;
-        }
-        .moy2Dif td{
-            width: 320px;
-        }
-        div{
-            display: flex;
-            height: 50px;
-        }
-        .noteFinal{
-            margin-left: 570px;
+        .trmoy td{
+            padding-top: 20px;
         }
     </style>
 </head>
@@ -60,18 +48,40 @@ function arondir($arg_1){
 function dessinTab($tab){
     foreach ($tab as $key => $laNote){
         echo "<tr>";
-            echo "<td>".$key."</td>";
-            if($laNote >= 4){
-                echo "<td style='color: yellowgreen'>".number_format($laNote, 1)."</td>";
+            echo "<td>".$key."  ".$laNote['desc']."</td>";
+            if($laNote['note'] >= 4){
+                echo "<td style='color: yellowgreen' class='nnpadding'>".number_format($laNote['note'], 1)."</td>";
             }else{
-                echo "<td style='color: red'>".number_format($laNote, 1)."</td>";
+                echo "<td style='color: red' class='nnpadding'>".number_format($laNote['note'], 1)."</td>";
             }
 
         echo "</tr>";
     }
 }
+
+function testcolor($note, $nb){
+    if($nb == 1){
+        if($note >= 4){
+            echo "<td style='color: yellowgreen' class='nnpadding'>".number_format($note, 1)."</td>";
+        }else{
+            echo "<td style='color: red' class='nnpadding'>".number_format($note, 1)."</td>";
+        }
+    }elseif($nb == 0){
+        if($note >= 4){
+            echo "<td style='color: yellowgreen' class='moy'>".number_format($note, 1)."</td>";
+        }else{
+            echo "<td style='color: red' class='moy'>".number_format($note, 1)."</td>";
+        }
+    }else{
+        if($note >= 4){
+            echo "<td style='color: yellowgreen'><h2>".number_format($note, 1)."</h2></td>";
+        }else{
+            echo "<td style='color: red'><h2>".number_format($note, 1)."</h2></td>";
+        }
+    }
+}
 //note TPI
-$TPI = 5.2;
+$TPI = 0;
 
 $comp_info = array();
 $CIE = array();
@@ -80,11 +90,15 @@ $module = file('tout_les_modules.txt');
 $ok = 0;
 foreach($module as $unit){
     $u = explode('  ', $unit);
+    if($u[0] == "TPI") {
+        $TPI = $u[1];
+        break;
+    }
     if("CIE\r\n" == end($u )|| $ok == 1){
         if($ok == 0){
             $ok = 1;
         }
-        else{
+        else {
             $CIE[$u[0]]['desc'] = $u[1];
             $CIE[$u[0]]['note'] = floatval($u[2]);
         }
@@ -119,53 +133,52 @@ $moyenne = round(((4*$moyenne_comp_info)+$moyenne_cie)/5, 1);
 // et la note globale
 $globalNote = round(($TPI + $moyenne) / 2, 1);
 ?>
-<!-- tout le html de la page avec le les variables php et la fonction d'avant et j'ai aussi mis des number format pour mettre des .0
-  la fonction dessinTab permets de charger un tableau avec les tabs associatif qu'on a fait avant-->
 <h1>Bulletin ICH</h1>
-<h2>Modules de compétences en informatique</h2>
-
 <table>
-<?php dessinTab($comp_info); ?>
-</table>
+    <tr>
+        <td><h2>Modules de compétences en informatique</h2></td>
+    </tr>
 
-<h2>Cours Interentreprises</h2>
+    <?php dessinTab($comp_info); ?>
 
-<table>
-<?php dessinTab($CIE); ?>
-</table>
+    <tr>
+        <td><h2>Cours Interentreprises</h2></td>
+    </tr>
 
-<h2>Compétences en informatique</h2>
+    <?php dessinTab($CIE); ?>
 
-<table>
+    <tr>
+        <td><h2>Compétences en informatique</h2></td>
+    </tr>
+
     <tr>
         <td>Modules de compétences en informatique</td>
-        <td><?php echo number_format($moyenne_comp_info, 1) ?></td>
+        <?php testcolor($moyenne_comp_info, 1); ?>
     </tr>
+
     <tr>
         <td>Cours Interentreprises</td>
-        <td><?php echo number_format($moyenne_cie, 1) ?></td>
+        <?php testcolor($moyenne_cie, 1); ?>
     </tr>
-</table>
-<table>
-    <tr class="moy1Dif">
+
+    <tr class="trmoy">
         <td>Moyenne</td>
-        <td class="viser"><?php echo number_format($moyenne, 1) ?></td>
+        <?php testcolor($moyenne, 0); ?>
     </tr>
 
-</table>
+    <tr>
+        <td><h2>TPI</h2></td>
+    </tr>
 
-<h2>TPI</h2>
-
-<table>
-    <tr class="moy2Dif">
+    <tr>
         <td>Moyenne</td>
-        <td class="viser"><?php echo number_format($TPI, 1) ?></td>
+        <?php testcolor($TPI, 0); ?>
+    </tr>
+
+    <tr class="trmoy">
+        <td><h2>Note globale</h2></td>
+        <?php testcolor($globalNote, 3); ?>
     </tr>
 </table>
-
-<div>
-    <h2>Note globale</h2>
-    <h2 class="noteFinal"><?php echo number_format($globalNote, 1) ?></h2>
-</div>
 </body>
 </html>
