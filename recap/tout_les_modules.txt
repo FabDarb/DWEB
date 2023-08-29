@@ -1,11 +1,11 @@
-117  Mettre en place l'infrastructure informatique d'une petite entreprise  4.5
-122  Automatiser des procédures à l'aide de scripts et de macros  5
-431  Exécuter des mandats de manière autonome dans un environnement informatique  5.5
-231  Appliquer la protection et la sécurité des données  3
-319  Concevoir et implémenter des applications  6
+117  Mettre en place l'infrastructure informatique d'une petite entreprise  07.01.2023  5
+122  Automatiser des procédures à l'aide de scripts et de macros  07.04.2023  4
+431  Exécuter des mandats de manière autonome dans un environnement informatique  17.06.2023  3
+231  Appliquer la protection et la sécurité des données  03.01.2023  5
+319  Concevoir et implémenter des applications  08.01.2023  4.5
 CIE
-123  Activer les services d´un serveur  4.5
-187  Mettre en service un poste de travail ICT avec le système d’exploitation  5
-216  Intégrer les terminaux IoE dans une plateforme existante  3.5
-293  Créer et publier un site Web  3.5
+123  Activer les services d´un serveur  07.06.2023  4.5
+187  Mettre en service un poste de travail ICT avec le système d’exploitation  07.02.2023  5
+216  Intégrer les terminaux IoE dans une plateforme existante  07.11.2022  3.5
+293  Créer et publier un site Web  07.11.2023  6
 TPI  4

@@ -46,15 +46,34 @@ function arondir($arg_1){
 
 // fonction pour dessiner le tableau pour les notes
 function dessinTab($tab){
+    $ordrePa = array();
+    $ordrePa[0] = 0;
     foreach ($tab as $key => $laNote){
-        echo "<tr>";
-            echo "<td>".$key."  ".$laNote['desc']."</td>";
-            if($laNote['note'] >= 4){
-                echo "<td style='color: yellowgreen' class='nnpadding'>".number_format($laNote['note'], 1)."</td>";
-            }else{
-                echo "<td style='color: red' class='nnpadding'>".number_format($laNote['note'], 1)."</td>";
+        for($i=count($ordrePa)-1; $i >= 0; $i--){
+            if($laNote['date'] > $ordrePa[$i]){
+                $ordrePa[$i + 1] = $ordrePa[$i];
+                $ordrePa[$i] = $laNote['date'];
             }
-
+        }
+    }
+    foreach ($tab as $key => $date){
+        foreach ($ordrePa as $k => $passage){
+            if($date['date'] == $passage){
+                $ordrePa[$k] = $key;
+            }
+        }
+    }
+    foreach ($ordrePa as $ordre){
+        if($ordre == 0){
+            break;
+        }
+        echo "<tr>";
+            echo "<td>".$ordre."  ".$tab[$ordre]['desc']."</td>";
+            if($tab[$ordre]['note'] >= 4){
+                echo "<td style='color: yellowgreen' class='nnpadding'>".number_format($tab[$ordre]['note'], 1)."</td>";
+            }else{
+                echo "<td style='color: red' class='nnpadding'>".number_format($tab[$ordre]['note'], 1)."</td>";
+            }
         echo "</tr>";
     }
 }
@@ -82,9 +101,7 @@ function testcolor($note, $nb){
 }
 //note TPI
 $TPI = 0;
-
-$comp_info = array();
-$CIE = array();
+$bulletin = array();
 $module = file('tout_les_modules.txt');
 
 $ok = 0;
@@ -99,12 +116,14 @@ foreach($module as $unit){
             $ok = 1;
         }
         else {
-            $CIE[$u[0]]['desc'] = $u[1];
-            $CIE[$u[0]]['note'] = floatval($u[2]);
+            $bulletin['CIE'][$u[0]]['desc'] = $u[1];
+            $bulletin['CIE'][$u[0]]['date'] = strtotime($u[2]);
+            $bulletin['CIE'][$u[0]]['note'] = floatval(end($u));
         }
     }else{
-        $comp_info[$u[0]]['desc'] = $u[1];
-        $comp_info[$u[0]]['note'] = floatval($u[2]);
+        $bulletin['info'][$u[0]]['desc'] = $u[1];
+        $bulletin['info'][$u[0]]['date'] = strtotime($u[2]);
+        $bulletin['info'][$u[0]]['note'] = floatval(end($u));
     }
 }
 
@@ -112,16 +131,19 @@ foreach($module as $unit){
 $moyenne_comp_info = 0;
 $moyenne_cie = 0;
 
-// 2 foreach pour addititonner les notes et après les divisers par le nombre de note total
-foreach ($comp_info as $note){
-    $moyenne_comp_info += $note['note'];
+foreach ($bulletin as $key => $branche){
+    if($key == "info"){
+        foreach ($branche as $note){
+            $moyenne_comp_info += $note['note'];
+        }
+    }else{
+        foreach ($branche as $note){
+            $moyenne_cie += $note['note'];
+        }
+    }
 }
-$moyenne_comp_info /= count($comp_info);
-
-foreach ($CIE as $note){
-    $moyenne_cie += $note['note'];
-}
-$moyenne_cie /= count($CIE);
+$moyenne_comp_info /= count($bulletin['info']);
+$moyenne_cie /= count($bulletin['CIE']);
 
 //utilisation fonction pour arrondir
 $moyenne_comp_info = arondir($moyenne_comp_info);
@@ -139,13 +161,13 @@ $globalNote = round(($TPI + $moyenne) / 2, 1);
         <td><h2>Modules de compétences en informatique</h2></td>
     </tr>
 
-    <?php dessinTab($comp_info); ?>
+    <?php dessinTab($bulletin['info']); ?>
 
     <tr>
         <td><h2>Cours Interentreprises</h2></td>
     </tr>
 
-    <?php dessinTab($CIE); ?>
+    <?php dessinTab($bulletin['CIE']); ?>
 
     <tr>
         <td><h2>Compétences en informatique</h2></td>
@@ -178,6 +200,14 @@ $globalNote = round(($TPI + $moyenne) / 2, 1);
     <tr class="trmoy">
         <td><h2>Note globale</h2></td>
         <?php testcolor($globalNote, 3); ?>
+    </tr>
+
+    <tr>
+        <?php if($globalNote >= 4){
+            echo "<td style='color: yellowgreen'><h2>Actuellement réussi</h2></td>";
+        }else{
+            echo "<td style='color: red'><h2>Actuellement en échec</h2></td>";
+        } ?>
     </tr>
 </table>
 </body>
