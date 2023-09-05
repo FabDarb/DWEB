@@ -99,7 +99,7 @@ foreach ($tab_notes as $nomdomaine => $domaine){
     echo "<th colspan='3'>".$domaine['desc']."</th>";
     echo "<td ".colors($tab_notes[$nomdomaine]['moy']).">".$tab_notes[$nomdomaine]['moy']."</td>";
     echo "</tr>";
-    $dateOrder = orderDate($tab_notes);
+    //$dateOrder = orderDate($tab_notes);
     foreach ($domaine['modules'] as $key => $module){
         echo "<tr>";
             echo "<td>".$key."</td>";

@@ -33,6 +33,16 @@ $tab_notes['test']['modules'][187]['desc'] = "Montage PC";
 $tab_notes['test']['modules'][187]['date'] = "2022-01-20";
 $tab_notes['test']['modules'][187]['note'] = 3;
 
+$tab_notes['test2']['desc'] = "test2";
+$tab_notes['test2']['moy'] = 0;
+$tab_notes['test2']['pond'] = 25;
+$tab_notes['test2']['modules'][123]['desc'] = "Serveur MS ...";
+$tab_notes['test2']['modules'][123]['date'] = "2022-01-19";
+$tab_notes['test2']['modules'][123]['note'] = 5;
+$tab_notes['test2']['modules'][187]['desc'] = "Montage PC";
+$tab_notes['test2']['modules'][187]['date'] = "2022-01-20";
+$tab_notes['test2']['modules'][187]['note'] = 2;
+
 
 
 ?>

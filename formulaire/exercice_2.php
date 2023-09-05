@@ -1,7 +1,14 @@
+<?php
+session_start();
+?>
+
 <html>
 <head>
     <title>Exemple1</title>
     <style>
+        body{
+            cursor: url("../recap/Balle_Turbo_32x32.png"), auto;
+        }
         img{
             width: 20%;
         }
@@ -40,18 +47,25 @@
 </head>
 <body>
 <?php
+$tabavant = array();
+include_once("avion.inc.php");
+$vol = 'aller';
+if($_SESSION != null){$vol = 'retour';}
 $mtn = date('j.m.Y');
 $dem = strtotime($mtn.'+ 1 days');
 $demain = date('j.m.Y', $dem);
-$list = file('liste.txt'); # de reto
 define('GENEV', 'Genève GVA');
 $gen = explode(' ', GENEV)[1];
 $g = explode(' ', GENEV)[0];
 $ouEstGen = array_search("Genève GVA\r\n", $list);
 $categories = array('cat_1' => 1, 'cat_2' => 0, 'cat_3' => 0);
+if($_SESSION != null){
+    foreach ($_SESSION['vols'] as $test)
+    $categories = array('cat_1' => $test['adultes'], 'cat_2' => $test['enfants'], 'cat_3' => $test['bebes']);
+}
 echo "<div class='start'>";
     echo "<img src=\"./image/logo-swiss-2x.png\">";
-    echo "<h1>"."Réservez votre vol"."</h1>";
+    echo "<h1>"."Réservez votre vol ".$vol."</h1>";
 echo "</div>";
 
 
@@ -64,18 +78,12 @@ echo "<tr>";
 
 echo "<td>";
         echo "<select name='depart' >";
-            echo "<option value=".$gen.">".$g."</option>";
-            foreach ($list as $key => $item){
-                $i = explode(' ', $item);
-                $j = end($i);
-                if($key == $ouEstGen){
-                    continue;
+            foreach ($avion as $key => $lePetiteAvion){
+                if($key == "GVA\r\n"){
+                    echo "<option value=".$key." selected >".$lePetiteAvion."</option>";
+                }else{
+                    echo "<option value=".$key.">".$lePetiteAvion."</option>";
                 }
-                $final = "";
-                for($e=0;$e<count($i)-1;$e++){
-                    $final = $final." ".$i[$e];
-                }
-                echo "<option value=".$j.">".$final."</option>";
                 # de quentin pozner
             }
         echo "</select>";
@@ -84,33 +92,20 @@ echo "</td>";
 echo "<td>"."<p>À</p>"."</td>";
 
 echo "<td>";
-echo "<select name='destination' >";
-foreach ($list as $key => $item){
-    $i = explode(' ', $item);
-    $j = end($i);
-    if($key == $ouEstGen){
-        continue;
-    }
-    $final = "";
-    for($e=0;$e<count($i)-1;$e++){
-        $final = $final." ".$i[$e];
-    }
-    echo "<option value=".$j.">".$final."</option>";
+echo "<select name='destination'>";
+    foreach ($avion as $key => $lePetiteAvion){
+        echo "<option value=".$key.">".$lePetiteAvion."</option>";
 
-}
+    }
 echo "</select>";
 echo "</td>";
 
 echo "</tr>";
 
 echo "<tr>";
-    echo "<td>"."<p>Vol Aller</p>"."</td>";
+    echo "<td>"."<p>Date</p>"."</td>";
+    echo "<td>"."<input type='date' name='date'>"."</td>";
 
-    echo "<td>"."<input type='text' name='date_depart' value=".$mtn.">"."</td>";
-
-    echo "<td>"."<p>Vol Retour</p>"."</td>";
-
-    echo "<td>"."<input type='text' name='date_arrivee' value=".$demain.">"."</td>";
 echo "</tr>";
 echo "</table>";
 echo "<br>";
@@ -118,17 +113,17 @@ echo "<table class='test'>";
 
 echo "<tr>";
 echo "<td>"."<p>Adultes</p>"."</td>";
-echo "<td>"."<input type='number' name='cat_1' value=$categories[cat_1] min='1' max='4'>"."</td>";
+echo "<td>"."<input type='number' name='adultes' value=$categories[cat_1] min='1' max='4'>"."</td>";
 echo "</tr>";
 
 echo "<tr>";
 echo "<td>"."<p>Enfants</p>"."</td>";
-echo "<td>"."<input type='number' name='cat_2' value=$categories[cat_2] min='0' max='4'>"."</td>";
+echo "<td>"."<input type='number' name='enfants' value=$categories[cat_2] min='0' max='4'>"."</td>";
 echo "</tr>";
 
 echo "<tr>";
 echo "<td>"."<p>Bébés</p>"."</td>";
-echo "<td>"."<input type='number' name='cat_3' value=$categories[cat_3] min='0' max='4'>"."</td>";
+echo "<td>"."<input type='number' name='bebes' value=$categories[cat_3] min='0' max='4'>"."</td>";
 echo "</tr>";
 
 echo "</table>";
@@ -143,6 +138,8 @@ echo "<input type='submit' name='rechercher' value='Rechercher votre Vol' class=
     echo "</form>";
 
 echo "</div>";
+
+
 
 ?>
 </body>

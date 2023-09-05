@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <html>
 <head>
     <title>Exemple1</title>
@@ -20,34 +23,32 @@
 </head>
 <body>
 <?php
-echo "<table>";
-echo "<tr>";
-echo "<th>"."Clefs"."</th>";
-echo "<th>"."Valeurs"."</th>";
-echo "</tr>";
-$test = 0;
-$_POST['date_depart'] = date('Y-m-d', strtotime($_POST['date_depart']));
-$_POST['date_arrivee'] = date('Y-m-d', strtotime($_POST['date_arrivee']));
-foreach ($_POST as $key => $val){
-    echo "<tr>";
-    if($test == 0){
-        echo "<td class='nn'>".$key."</td>";
-        echo "<td class='nn'>".$val."</td>";
-        $test = 1;
-    }else{
-        echo "<td class='oui'>".$key."</td>";
-        echo "<td class='oui'>".$val."</td>";
-        $test = 0;
+require_once ("avion.inc.php");
+$quelvol = 'Réserver un vol retour';
+$_SESSION['vols'][] = $_POST;
+$nb = 1;
+foreach ($_SESSION['vols'] as $infos){
+    echo "Départ : ".$avion[$infos['depart']."\r\n"]."(".$infos['depart'].")"."</br>";
+    echo "Arrivée : ".$avion[$infos['destination']."\r\n"]."(".$infos['destination'].")"."</br>";
+    echo "Date de départ : ".$infos['date']."</br>";
+    foreach ($infos as $info){
+        $nb = intval($infos['adultes']) + intval($infos['enfants']) + intval($infos['bebes']);
     }
-    echo "</tr>";
+    echo "Passagers : $nb </br>";
 }
-
-echo "</table>";
 echo "<pre>";
-print_r($_POST);
+print_r($_SESSION);
 echo "</pre>";
 
+
+
+if(count($_SESSION['vols']) >= 2){
+    $quelvol = 'Autre voyage';
+    session_destroy();
+}
+echo "<a href='exercice_2.php'>$quelvol</a>";
 require_once("../recap/exercice_1.inc.php");
 ?>
+
 </body>
 </html>
