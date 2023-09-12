@@ -79,10 +79,16 @@ echo "<tr>";
 echo "<td>";
         echo "<select name='depart' >";
             foreach ($avion as $key => $lePetiteAvion){
-                if($key == "GVA\r\n"){
+                if($_SESSION == null && $key == "GVA\r\n"){
                     echo "<option value=".$key." selected >".$lePetiteAvion."</option>";
                 }else{
-                    echo "<option value=".$key.">".$lePetiteAvion."</option>";
+                    if($_SESSION != null && $_SESSION['vols'][0]['destination']."\r\n" == $key){
+                        echo "<option value=".$_SESSION['vols'][0]['destination']." selected >".$avion[$_SESSION['vols'][0]['destination']."\r\n"]."</option>";
+                    }
+                    else{
+                        echo "<option value=".$key.">".$lePetiteAvion."</option>";
+                    }
+
                 }
                 # de quentin pozner
             }
@@ -94,7 +100,12 @@ echo "<td>"."<p>À</p>"."</td>";
 echo "<td>";
 echo "<select name='destination'>";
     foreach ($avion as $key => $lePetiteAvion){
-        echo "<option value=".$key.">".$lePetiteAvion."</option>";
+        if($_SESSION != null && $_SESSION['vols'][0]['depart']."\r\n" == $key){
+            echo "<option value=".$_SESSION['vols'][0]['depart']." selected >".$avion[$_SESSION['vols'][0]['depart']."\r\n"]."</option>";
+        }
+        else{
+            echo "<option value=".$key.">".$lePetiteAvion."</option>";
+        }
 
     }
 echo "</select>";
@@ -138,8 +149,6 @@ echo "<input type='submit' name='rechercher' value='Rechercher votre Vol' class=
     echo "</form>";
 
 echo "</div>";
-
-
 
 ?>
 </body>

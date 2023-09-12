@@ -27,6 +27,7 @@ require_once ("avion.inc.php");
 $quelvol = 'Réserver un vol retour';
 $_SESSION['vols'][] = $_POST;
 $nb = 1;
+echo "<h1>Informations concernant votre vol au départ de ".$avion[$_POST['depart']."\r\n"]." et à destination de ".$avion[$_POST['destination']."\r\n"]." :</h1>";
 foreach ($_SESSION['vols'] as $infos){
     echo "Départ : ".$avion[$infos['depart']."\r\n"]."(".$infos['depart'].")"."</br>";
     echo "Arrivée : ".$avion[$infos['destination']."\r\n"]."(".$infos['destination'].")"."</br>";
@@ -34,7 +35,7 @@ foreach ($_SESSION['vols'] as $infos){
     foreach ($infos as $info){
         $nb = intval($infos['adultes']) + intval($infos['enfants']) + intval($infos['bebes']);
     }
-    echo "Passagers : $nb </br>";
+    echo "Passagers : ".$nb." (".intval($infos['adultes'])." adultes, ".intval($infos['enfants'])." enfants, ".intval($infos['bebes'])." bébés"."</br>";
 }
 echo "<pre>";
 print_r($_SESSION);
