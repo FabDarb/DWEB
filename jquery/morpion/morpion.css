@@ -12,3 +12,6 @@ td {
 .symbole_1{
 	background-image:url("../images/morpion/1.png");
 }
+body{
+	cursor: wait;
+}
