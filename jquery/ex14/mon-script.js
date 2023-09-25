@@ -6,7 +6,7 @@ $(function (){
                 "<img alt='t' src='../images/" + $(this).attr('data-dif') + ".png' /><br>" +
                 "<strong>" + $(this).attr('href').split('/')[2].split('.')[0] +"</strong>"
         },
-        show: { effect: "size", duration: 1000 },
+        show: {effect: "size", duration: 800},
         tooltipClass: "custom-tooltip-styling",
     });
 });
