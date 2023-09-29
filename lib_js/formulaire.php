@@ -1,31 +1,10 @@
-<!doctype html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>inscription</title>
-
-    <!-- css de bootatrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-
-    <!-- JQuery -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-
-    <!-- Bootstrap -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
-    <!-- JQuery validate -->
-    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
-
-
-</head>
-<body>
-    <div class="container">
+<?php
+require("./config/config.inc.php");
+require(WAY . "/includes/head.inc.php");
+?>
         <div class="row">
             <div class="header">
-                <h3>Inscription</h3>
+                <h3>Inscription Qwer1234@</h3>
             </div>
         </div>
         <div class="panel with panel-primary class">
@@ -55,7 +34,7 @@
                     <div class="form-group row">
                         <label for="password" class="col-sm-2 col-form-label">Mot de passe</label>
                         <div class="col-sm-10">
-                            <input type="password" class="form-control" id="a" name="password" placeholder="votre mot de passe">
+                            <input type="password" class="form-control" id="password" name="password" placeholder="votre mot de passe">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -67,7 +46,7 @@
                     <div class="form-group row col-sm-7">
                         <div class="col-sm-3"></div>
                         <label for="news_letter" class="col-sm-8">
-                            <input type="checkbox" id="news_letter" name="news_letter" value="1">
+                            <input type="checkbox" id="news_letter" name="news_letter" value="0">
                             la formation d'informaticien m'interesse</label>
                     </div>
                     <div class="form-group row col-sm-8 pull-right">
@@ -81,6 +60,7 @@
             </div>
         </div>
     </div>
+
     <script src="./js/inscription.js"></script>
 </body>
 </html>
