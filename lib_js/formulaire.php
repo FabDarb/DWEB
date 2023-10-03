@@ -59,8 +59,8 @@ require(WAY . "/includes/head.inc.php");
             <div class="panel-footer">
             </div>
         </div>
-    </div>
 
     <script src="./js/inscription.js"></script>
+
 </body>
 </html>

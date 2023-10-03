@@ -18,7 +18,7 @@ $(function(){
 
     $("#inscription_form").validate(
         {
-            debug:true,
+            //debug:true,
             rules:{
                 nom_per:{
                     "required":true,
@@ -74,8 +74,17 @@ $(function(){
                         email_per:$("#email_per").val(),
                         password:$("#password").val(),
                         news_letter:$("#news_letter").val()
+                    },
+                    function result(data,status){
+                        //ajout de message erreur
+                        $("#alert").removeClass("alert-sucess");
+                        $("#alert").removeClass("alert-danger");
+                        $("#alert .message").html(data.message.texte);
+                        $("#alert").addClass("alert-"+data.message.type);
+                        $("#alert").css("display","block");
                     }
                 )
+
             }
         }
     );

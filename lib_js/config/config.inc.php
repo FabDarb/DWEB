@@ -9,7 +9,7 @@ ini_set('display_errors', DISPLAY_ERROR);
 //chemin d'accès
 //echo getcwd();
 define("WAY","C:\wamp64\www\ICT_133_fad\DWEB\lib_js");
-define("URL","http://localhost/ICT_133_fad/DWEB/");
+define("URL","http://localhost/ICT_133_fad/DWEB/lib_js");
 
 //base de donnée
 //host
