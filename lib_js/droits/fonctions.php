@@ -13,7 +13,7 @@ require(WAY . "/includes/head.inc.php")
             Ajouter une fonction
         </div>
         <div class="panel-body">
-            <form id="fonction_form" action="check.php" method="post">
+            <form id="fonction_form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" onsubmit="delete">
                 <div class="form-group row">
                     <label for="nom_fnc" class="col-sm-2 col-form-label">Nom</label>
                     <div class="col-sm-10">
@@ -29,7 +29,7 @@ require(WAY . "/includes/head.inc.php")
                 <div class="form-group row">
                     <label for="desc_fnc" class="col-sm-2 col-form-label">Description de la fonction</label>
                     <div class="col-sm-10">
-                        <textarea class="form-control" id="desc_fnc" name="desc_fnc" placeholder="Abreviation"></textarea>
+                        <textarea class="form-control" id="desc_fnc" name="desc_fnc" placeholder="Description"></textarea>
                     </div>
                 </div>
                 <div class="form-group row col-sm-8 pull-right">
@@ -41,7 +41,7 @@ require(WAY . "/includes/head.inc.php")
         </div>
     </div>
 
-    <script src="./js/autorisations.js"></script>
+    <script src="./js/fonctions.js"></script>
 
 </body>
 </html>

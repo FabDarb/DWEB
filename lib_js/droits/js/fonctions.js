@@ -28,6 +28,24 @@ $(function (){
                     required:"Une description de fonction est indispensable",
                     minlength:"La description de la fonction doit être composé de 20 caractères au minimum"
                 }
+            },
+            submitHandler: function (form){
+                console.log("send");
+                $.post(
+                    "./json/fonction.json.php?_="+Date.now(),
+                    {
+                        nom_fnc:$("#nom_fnc").val(),
+                        abr_fnc:$("#abr_fnc").val(),
+                        desc_fnc:$("#desc_fnc").val()
+                    },
+                    function result(data,status){
+                        $("#alert").removeClass("alert-sucess");
+                        $("#alert").removeClass("alert-danger");
+                        $("#alert .message").html(data.message.texte);
+                        $("#alert").addClass("alert-"+data.message.type);
+                        $("#alert").css("display","block");
+                    }
+                )
             }
     }
     );
